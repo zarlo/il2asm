@@ -22,6 +22,11 @@ namespace il2asm
             sb.AppendLine(name + ":");
         }
 
+        public void Imul(string v)
+        {
+            sb.AppendLine("imul " + v);
+        }
+
         public void Global(string name)
         {
             sb.AppendLine("global " + name);
@@ -109,6 +114,11 @@ namespace il2asm
         public void Add(string valueA, string valueB)
         {
             sb.AppendLine("add " + valueA + ", " + valueB);
+        }
+
+        public void Mul(string valueA, string valueB)
+        {
+            sb.AppendLine("mul " + valueA + ", " + valueB);
         }
 
         public void Cmp(string valueA, string valueB)

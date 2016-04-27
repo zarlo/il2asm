@@ -8,19 +8,16 @@ using Mono.Cecil.Cil;
 
 namespace il2asm.Opcodes
 {
-    public class Brtrue_S : IOpcode
+    public class Callvirt : IOpcode
     {
-        public Brtrue_S()
+        public Callvirt()
         {
-            OP.Add(OpCodes.Brtrue_S);
-            OP.Add(OpCodes.Brtrue);
+            OP.Add(OpCodes.Callvirt);
         }
 
         public override void Compile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
-            ab.Pop("eax"); //flag
-            ab.Cmp("eax", "1");
-            ab.Jmpe(Utils.SafeName(md.FullName) + i.Operand.ToString().Split(':')[0]);
+            ab.Call(Utils.SafeName(i.Operand.ToString()));
         }
     }
 }

@@ -60,13 +60,18 @@
     <Compile Include="Compiler.cs" />
     <Compile Include="IOpcode.cs" />
     <Compile Include="Opcodes\Add.cs" />
+    <Compile Include="Opcodes\Brfalse.cs" />
     <Compile Include="Opcodes\Brtrue_S.cs" />
     <Compile Include="Opcodes\Br_S.cs" />
     <Compile Include="Opcodes\Call.cs" />
+    <Compile Include="Opcodes\Callvirt.cs" />
+    <Compile Include="Opcodes\Ceq.cs" />
     <Compile Include="Opcodes\Clt.cs" />
+    <Compile Include="Opcodes\Ldarg.cs" />
     <Compile Include="Opcodes\Ldc_I4.cs" />
     <Compile Include="Opcodes\Ldloc.cs" />
     <Compile Include="Opcodes\Ldsfld.cs" />
+    <Compile Include="Opcodes\Mul.cs" />
     <Compile Include="Opcodes\Nop.cs" />
     <Compile Include="Opcodes\Ret.cs" />
     <Compile Include="Opcodes\Stind_I1.cs" />
@@ -79,7 +84,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\il2asm.Core\il2asm.Core.csproj">
+      <Project>{2c665135-3c60-4d9c-af62-4264fc42b2ca}</Project>
+      <Name>il2asm.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

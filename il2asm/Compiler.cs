@@ -13,11 +13,10 @@ namespace il2asm
     {
         public AsmBuilder ab = new AsmBuilder();
 
-        private int CurrentStackSize = 0;
-
         public void Compile(string inFile, string outFile)
         {
             IOpcode.BuildOpcodeIndex();
+
             if (!File.Exists(inFile))
             {
                 Console.WriteLine("The file \"" + inFile + "\" does not exist.");
@@ -117,6 +116,14 @@ namespace il2asm
             ab.Label(Utils.SafeName(md.FullName));
             ab.Line();
 
+          /*  for (int i = 0; i < md.Parameters.Count; i++)
+            {
+                var z = md.Parameters[i];
+                ab.Pop("eax");
+                ab.Mov("[ebp + " + (4 + (i * 4)) + "]", "eax");
+            }*/
+            ab.Line();
+
 
             ab.Push("ebp");
             ab.Mov("ebp", "esp");
@@ -124,6 +131,9 @@ namespace il2asm
             ab.Push("edi");
             ab.Push("esi");
 
+
+           
+            
             var Offsets = new List<string>();
 
             foreach (var i in md.Body.Instructions)
@@ -146,6 +156,21 @@ namespace il2asm
             }
 
             if (i.OpCode == OpCodes.Brtrue_S)
+            {
+                Offsets.Add(Utils.SafeName(md.FullName) + i.Operand.ToString().Split(':')[0]);
+            }
+
+            if (i.OpCode == OpCodes.Brtrue)
+            {
+                Offsets.Add(Utils.SafeName(md.FullName) + i.Operand.ToString().Split(':')[0]);
+            }
+
+            if (i.OpCode == OpCodes.Brfalse)
+            {
+                Offsets.Add(Utils.SafeName(md.FullName) + i.Operand.ToString().Split(':')[0]);
+            }
+
+            if (i.OpCode == OpCodes.Brfalse_S)
             {
                 Offsets.Add(Utils.SafeName(md.FullName) + i.Operand.ToString().Split(':')[0]);
             }

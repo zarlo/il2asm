@@ -20,7 +20,7 @@ namespace il2asm
         public static void AutoCompile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
             ab.Comment(i.ToString());
-
+            bool Found = false;
             if (Offsets.Contains(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0]))
             {
                 ab.Label(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0]);
@@ -31,8 +31,13 @@ namespace il2asm
                 if(z.OP.Contains(i.OpCode))
                 {
                     z.Compile(i, ab, Offsets, md);
+                    Found = true;
                     break;
                 }
+            }
+            if(!Found)
+            {
+                Console.WriteLine("Missing opcode: " + i.ToString());
             }
 
             ab.Line();

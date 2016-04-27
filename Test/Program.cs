@@ -1,32 +1,63 @@
-﻿
+﻿using il2asm.Core.Attributes;
+
 namespace Test
 {
     unsafe class Program
     {
 
         static byte* fb = (byte*)0XB8000;
+        static int x = 0;
+        static int y = 0;
 
         static void Main()
         {
             Utils.Clear();
             Print();
+            PutC('\n');
+            
         }
+       
 
         static void Print()
-        {
-            int c = 0;
+        {            
             for (int i = 65; i < 90; i++)
             {
-                fb[c] = (byte)i;
-                fb[c + 1] = (byte)0X0F;
-                c += 2;
+                PutC((byte)i);
+            }
+
+            PutC('\n');
+
+            for (int i = 65; i < 90; i++)
+            {
+                PutC((byte)i);
             }
         }
         
+        static void PutC(char i)
+        {
+            if(x == 160)
+            {
+                y++;
+                x = 0;
+            }
+            if (i == '\n')
+            {
+                y++;
+                x = 0;
+                return;
+            }
+            int offset = x + (y * 160);
+            fb[offset] = (byte)i;
+            fb[offset + 1] = (byte)0X0F;
+            x += 2;
+        }
 
-       
+        static void PutC(byte i)
+        {
+            PutC((char)i);
+        }
+               
     }
-
 
     public unsafe static class Utils
     {
@@ -38,6 +69,18 @@ namespace Test
             {
                 fb[i] = 0;
             }
+        }
+    }
+
+    [Plug(typeof(string))]
+    public unsafe class StringPlug
+    {
+
+        [PlugMask(typeof(int))]
+        public static char get_Chars(int index)
+        {
+
+            return '\0';
         }
     }
 }

@@ -17,6 +17,8 @@ namespace il2asm
                 .Replace(")", "")
                 .Replace("[", "_")
                 .Replace("*", "ASTRIC")
+                .Replace("<", "GREATERTHAN")
+                .Replace(">", "SMALLERTHAN")
                 .Replace("]", "_");
         }
     }
