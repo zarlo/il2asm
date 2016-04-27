@@ -4,6 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "il2asm", "il2asm\il2asm.csproj", "{B88E43CB-37F1-47E4-8ABB-78FEF7AA98E1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{63CCC67A-372B-4016-A6E9-A17A229D2631} = {63CCC67A-372B-4016-A6E9-A17A229D2631}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "i2a", "i2a\i2a.csproj", "{6174E48B-129B-4794-83C0-1AC30166FC22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{63CCC67A-372B-4016-A6E9-A17A229D2631}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,14 @@ Global
 		{B88E43CB-37F1-47E4-8ABB-78FEF7AA98E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B88E43CB-37F1-47E4-8ABB-78FEF7AA98E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B88E43CB-37F1-47E4-8ABB-78FEF7AA98E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6174E48B-129B-4794-83C0-1AC30166FC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6174E48B-129B-4794-83C0-1AC30166FC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6174E48B-129B-4794-83C0-1AC30166FC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6174E48B-129B-4794-83C0-1AC30166FC22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63CCC67A-372B-4016-A6E9-A17A229D2631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63CCC67A-372B-4016-A6E9-A17A229D2631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63CCC67A-372B-4016-A6E9-A17A229D2631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63CCC67A-372B-4016-A6E9-A17A229D2631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
