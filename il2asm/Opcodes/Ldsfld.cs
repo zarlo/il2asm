@@ -8,16 +8,17 @@ using Mono.Cecil.Cil;
 
 namespace il2asm.Opcodes
 {
-    public class Nop : IOpcode
+    public class Ldsfld : IOpcode
     {
-        public Nop()
+        public Ldsfld()
         {
-            OP.Add(OpCodes.Nop);
+            OP.Add(OpCodes.Ldsfld);
         }
-      
+
         public override void Compile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
-            
+            ab.Mov("eax", "dword [" + Utils.SafeName(i.Operand.ToString()) + "]");
+            ab.Push("eax");
         }
     }
 }

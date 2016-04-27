@@ -8,16 +8,24 @@ using Mono.Cecil.Cil;
 
 namespace il2asm.Opcodes
 {
-    public class Nop : IOpcode
+    public class Ret : IOpcode
     {
-        public Nop()
+        public Ret()
         {
-            OP.Add(OpCodes.Nop);
+            OP.Add(OpCodes.Ret);
         }
-      
+
         public override void Compile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
-            
+
+            ab.Pop("edi");
+            ab.Pop("esi");
+            ab.Mov("esp", "ebp");
+            ab.Pop("ebp");
+
+            ab.Line();
+
+            ab.Ret();
         }
     }
 }

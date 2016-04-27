@@ -8,16 +8,16 @@ using Mono.Cecil.Cil;
 
 namespace il2asm.Opcodes
 {
-    public class Nop : IOpcode
+    public class Br_S : IOpcode
     {
-        public Nop()
+        public Br_S()
         {
-            OP.Add(OpCodes.Nop);
+            OP.Add(OpCodes.Br_S);
         }
-      
+
         public override void Compile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
-            
+            ab.Jmp(Utils.SafeName(md.FullName) + i.Operand.ToString().Split(':')[0]);
         }
     }
 }

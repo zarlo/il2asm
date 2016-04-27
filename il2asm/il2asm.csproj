@@ -58,12 +58,28 @@
   <ItemGroup>
     <Compile Include="AsmBuilder.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="IOpcode.cs" />
+    <Compile Include="Opcodes\Add.cs" />
+    <Compile Include="Opcodes\Brtrue_S.cs" />
+    <Compile Include="Opcodes\Br_S.cs" />
+    <Compile Include="Opcodes\Call.cs" />
+    <Compile Include="Opcodes\Clt.cs" />
+    <Compile Include="Opcodes\Ldc_I4.cs" />
+    <Compile Include="Opcodes\Ldloc.cs" />
+    <Compile Include="Opcodes\Ldsfld.cs" />
+    <Compile Include="Opcodes\Nop.cs" />
+    <Compile Include="Opcodes\Ret.cs" />
+    <Compile Include="Opcodes\Stind_I1.cs" />
+    <Compile Include="Opcodes\Stloc.cs" />
+    <Compile Include="Opcodes\Stsfld.cs" />
+    <Compile Include="Opcodes\Sub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
