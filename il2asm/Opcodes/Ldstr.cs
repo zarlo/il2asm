@@ -24,7 +24,8 @@ namespace il2asm.Opcodes
                 {
                     constant += (byte)z + ", ";
                 }
-                ab.GlobalVar(Utils.SafeName("STR" + i.Operand.ToString()), (i.Operand.ToString().Length -1) + ", " + constant.TrimEnd(',') , "db");
+                constant = constant.Trim().TrimEnd(',');
+                ab.GlobalVar(Utils.SafeName("STR" + i.Operand.ToString()), (i.Operand.ToString().Length -1) + ",0 ,0 ,0 , " + constant , "db");
                 Compiler.ConstantIndex.Add(i.Operand.ToString());
             }
             ab.Mov("eax", "dword " +  Utils.SafeName("STR" + i.Operand.ToString()) + "");

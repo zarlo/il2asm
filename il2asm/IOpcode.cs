@@ -19,7 +19,7 @@ namespace il2asm
 
         public static void AutoCompile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
-            ab.Comment(i.ToString());
+            ab.Comment(i.ToString().Replace("\r\n", "\n").Replace("\n", ""));
             bool Found = false;
             if (Offsets.Contains(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0]))
             {

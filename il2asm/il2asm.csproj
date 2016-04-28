@@ -74,6 +74,7 @@
     <Compile Include="Opcodes\Ldloc.cs" />
     <Compile Include="Opcodes\Ldsfld.cs" />
     <Compile Include="Opcodes\Ldstr.cs" />
+    <Compile Include="Opcodes\Lldind_I4.cs" />
     <Compile Include="Opcodes\Lldind_u1.cs" />
     <Compile Include="Opcodes\Lldind_I1.cs" />
     <Compile Include="Opcodes\Lldind_u2.cs" />

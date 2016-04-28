@@ -15,13 +15,15 @@ namespace Test
             Print();
             PutC('\n');
             PutS("test");
+            PutC('\n');
             PutS("test");
 
         }
 
         public static void PutS(string s)
-        {           
-            for (int i = 0; i < 3; i++)
+        {
+            var len = s.Length;
+            for (int i = 0; i < len; i++)
             {              
                 PutC(s[i]);
             }
@@ -88,11 +90,12 @@ namespace Test
         [PlugMask(typeof(int))]
         public static char get_Chars(byte * value, int index)
         {
-            var val = value[index + 1];
+            var val = value[index + 4];
             return (char)val;
         }
 
-        public static int get_Length(byte * value)
+        [PlugMask]
+        public static int get_Length(int * value)
         {           
             var val = value[0];
            
