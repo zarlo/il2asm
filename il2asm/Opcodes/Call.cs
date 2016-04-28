@@ -17,7 +17,22 @@ namespace il2asm.Opcodes
 
         public override void Compile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
-            ab.Call(Utils.SafeName(i.Operand.ToString()));
+            
+
+            if (Compiler.PlugIndex.ContainsKey(Utils.SafeName(i.Operand.ToString())))
+            {
+                ab.Comment("Pluged");
+                ab.Call(Compiler.PlugIndex[Utils.SafeName(i.Operand.ToString())]);
+            }
+            else
+            {
+                ab.Call(Utils.SafeName(i.Operand.ToString()));
+            }
+
+            if ((i.Operand as MethodReference).ReturnType.ToString() != typeof(void).ToString())
+            {
+                ab.Push("eax");
+            }
         }
     }
 }

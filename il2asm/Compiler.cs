@@ -1,4 +1,5 @@
-﻿using Mono.Cecil;
+﻿using il2asm.Core.Attributes;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,13 @@ namespace il2asm
     public class Compiler
     {
         public AsmBuilder ab = new AsmBuilder();
+        public static Dictionary<string, string> PlugIndex = new Dictionary<string, string>();
+        public static List<string> ConstantIndex = new List<string>();
 
         public void Compile(string inFile, string outFile)
         {
+            PlugIndex.Clear();
+            ConstantIndex.Clear();
             IOpcode.BuildOpcodeIndex();
 
             if (!File.Exists(inFile))
@@ -38,6 +43,29 @@ namespace il2asm
                         if (y.Name.Contains(".cctor"))
                         {
                             ab.Call(Utils.SafeName(y.FullName));
+                        }
+                        if (!y.Name.Contains(".ctor"))
+                        {
+                            bool IsPlug = z.CustomAttributes.Where((x) => { return x.AttributeType.FullName == typeof(Plug).FullName; }).Count() != 0;
+
+                            CustomAttribute plug = null;
+
+
+                            if (IsPlug)
+                            {
+                                plug = z.CustomAttributes.Where((x) => { return x.AttributeType.FullName == typeof(Plug).FullName; }).First();
+                                // ab.Comment("Found Plug for: " + (plug.ConstructorArguments[0].Value).ToString());
+                                var tt = Type.GetType(plug.ConstructorArguments[0].Value.ToString());
+                                string Paramaters = "";
+                                for (int j = 1; j < y.Parameters.Count; j++)
+                                {
+                                    var hh = y.Parameters[j];
+                                    Paramaters += hh.ParameterType.FullName + ",";
+                                }
+
+                                Paramaters = Paramaters.TrimEnd(',');
+                                PlugIndex.Add(Utils.SafeName(y.MethodReturnType.ReturnType.ToString() + " " + tt.FullName + "::" + y.Name + "(" + Paramaters + ")"), Utils.SafeName(y.FullName));
+                            }
                         }
                     }
                 }
@@ -70,6 +98,16 @@ namespace il2asm
 
         public void CompileType(TypeDefinition td)
         {
+            bool IsPlug = td.CustomAttributes.Where((x) => { return x.AttributeType.FullName == typeof(Plug).FullName; }).Count() != 0;
+
+            CustomAttribute plug = null;
+
+
+            if (IsPlug)
+            {
+                plug = td.CustomAttributes.Where((x) => { return x.AttributeType.FullName == typeof(Plug).FullName; }).First();
+                ab.Comment("Plug for: " + (plug.ConstructorArguments[0].Value).ToString());
+            }
             ab.Comment("Class: " + td.FullName);
             ab.Line();
 
@@ -78,8 +116,8 @@ namespace il2asm
             foreach (var i in td.Fields)
             {
                 string value = "";
-                var x = new byte[] { 0, 0, 0, 0};
-                foreach(var z in x)
+                var x = new byte[] { 0, 0, 0, 0 };
+                foreach (var z in x)
                 {
                     value += z + ",";
                 }
@@ -103,17 +141,35 @@ namespace il2asm
             {
                 if (!i.Name.Contains(".ctor"))
                 {
-                    CompileMethod(i);
+                    if (IsPlug)
+                    {
+                        CompileMethod(i,  Type.GetType(plug.ConstructorArguments[0].Value.ToString()));
+                    }
+                    else
+                    {
+                        CompileMethod(i);
+                    }
+
                 }
             }
         }
 
-        public void CompileMethod(MethodDefinition md)
+        public void CompileMethod(MethodDefinition md, Type plug = null)
         {
+            if(plug != null)
+            {
+                ab.Comment("Pluging: " + md.Name + " for " + plug.Name);
+                //System.Char System.String::get_Chars(System.Int32)
+                //System.Char_System.String__get_CharsSystem.Int32
+               
+            }
             ab.Comment("Method: " + md.FullName);
             ab.Line();
 
+
+
             ab.Label(Utils.SafeName(md.FullName));
+            
             ab.Line();
 
           /*  for (int i = 0; i < md.Parameters.Count; i++)
@@ -127,7 +183,7 @@ namespace il2asm
 
             ab.Push("ebp");
             ab.Mov("ebp", "esp");
-            ab.Sub("esp", (md.Body.MaxStackSize * 4).ToString());
+           // ab.Sub("esp", (md.Body.MaxStackSize * 4).ToString());
             ab.Push("edi");
             ab.Push("esi");
 

@@ -2,23 +2,32 @@
 
 namespace Test
 {
-    unsafe class Program
+    public unsafe class Program
     {
 
-        static byte* fb = (byte*)0XB8000;
-        static int x = 0;
-        static int y = 0;
+        public static byte* fb = (byte*)0XB8000;
+        public static int x = 0;
+        public static int y = 0;
 
-        static void Main()
+        public static void Main()
         {
             Utils.Clear();
             Print();
             PutC('\n');
-            
-        }
-       
+            PutS("test");
+            PutS("test");
 
-        static void Print()
+        }
+
+        public static void PutS(string s)
+        {           
+            for (int i = 0; i < 3; i++)
+            {              
+                PutC(s[i]);
+            }
+        }
+
+        public static void Print()
         {            
             for (int i = 65; i < 90; i++)
             {
@@ -32,8 +41,8 @@ namespace Test
                 PutC((byte)i);
             }
         }
-        
-        static void PutC(char i)
+
+        public static void PutC(char i)
         {
             if(x == 160)
             {
@@ -52,7 +61,7 @@ namespace Test
             x += 2;
         }
 
-        static void PutC(byte i)
+        public static void PutC(byte i)
         {
             PutC((char)i);
         }
@@ -77,10 +86,17 @@ namespace Test
     {
 
         [PlugMask(typeof(int))]
-        public static char get_Chars(int index)
+        public static char get_Chars(byte * value, int index)
         {
+            var val = value[index + 1];
+            return (char)val;
+        }
 
-            return '\0';
+        public static int get_Length(byte * value)
+        {           
+            var val = value[0];
+           
+            return val;
         }
     }
 }

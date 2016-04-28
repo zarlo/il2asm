@@ -27,7 +27,7 @@ namespace il2asm.Opcodes
                 //pop eax
                 //mov dword[esp + 4], eax
                 ab.Pop("eax");
-                ab.Mov("dword[ebp - " + (4 * (Convert.ToInt32(i.Operand.ToString()) + 1)) + "]", "eax");
+                ab.Mov("dword[ebp - " + (4 * (Convert.ToInt32(i.Operand.ToString().Split('_').Last()) + 1)) + "]", "eax");
             }
             else
             {

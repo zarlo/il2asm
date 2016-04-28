@@ -20,12 +20,12 @@ namespace il2asm.Opcodes
             ab.Pop("eax"); //value a
             ab.Pop("ebx"); //value b
             ab.Cmp("eax", "ebx");
-            ab.Jmpe(i.ToString().Split(':')[0] + "_1");
+            ab.Jmpe(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0] + "_1CEQ");
             ab.Push("0");
-            ab.Jmp(i.ToString().Split(':')[0] + "_0");
-            ab.Label(i.ToString().Split(':')[0] + "_1");
+            ab.Jmp(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0] + "_0CEQ");
+            ab.Label(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0] + "_1CEQ");
             ab.Push("1");
-            ab.Label(i.ToString().Split(':')[0] + "_0");
+            ab.Label(Utils.SafeName(md.FullName) + i.ToString().Split(':')[0] + "_0CEQ");
         }
     }
 }

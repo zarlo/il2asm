@@ -17,6 +17,10 @@ namespace il2asm.Opcodes
 
         public override void Compile(Instruction i, AsmBuilder ab, List<string> Offsets, MethodDefinition md)
         {
+            if(md.ReturnType.ToString() != typeof(void).ToString())
+            {
+                ab.Pop("eax");
+            }
 
             ab.Pop("edi");
             ab.Pop("esi");

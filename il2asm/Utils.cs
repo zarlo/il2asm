@@ -19,6 +19,7 @@ namespace il2asm
                 .Replace("*", "ASTRIC")
                 .Replace("<", "GREATERTHAN")
                 .Replace(">", "SMALLERTHAN")
+                .Replace(",", "COMMA")
                 .Replace("]", "_");
         }
     }

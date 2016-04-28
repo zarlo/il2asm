@@ -24,7 +24,7 @@ namespace il2asm.Opcodes
         {
             if (!char.IsDigit(i.OpCode.Name.Split('.').Last()[0]))
             {
-                ab.Mov("eax", "dword[ebp - " + (4 * (Convert.ToInt32(i.Operand.ToString()) + 1)) + "]");
+                ab.Mov("eax", "dword[ebp - " + (4 * (Convert.ToInt32(i.Operand.ToString().Split('_').Last()) + 1)) + "]");
                 ab.Push("eax");
             }
             else
