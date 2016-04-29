@@ -42,7 +42,7 @@ namespace il2asm
             sb.AppendLine("jmp " + name);
         }
 
-        public void GlobalVar(string name, string value,string type)
+        public void GlobalVar(string name, string value, string type)
         {
             sbEnd.AppendLine(name + ": " + type + " " + value);
         }
@@ -114,6 +114,21 @@ namespace il2asm
         public void Add(string valueA, string valueB)
         {
             sb.AppendLine("add " + valueA + ", " + valueB);
+        }
+
+        public void And(string valueA, string valueB)
+        {
+            sb.AppendLine("and " + valueA + ", " + valueB);
+        }
+
+        public void Or(string valueA, string valueB)
+        {
+            sb.AppendLine("or " + valueA + ", " + valueB);
+        }
+
+        public void Shl(string valueA, string valueB)
+        {
+            sb.AppendLine("shl " + valueA + ", " + valueB);
         }
 
         public void Mul(string valueA, string valueB)

@@ -59,6 +59,9 @@
     <Compile Include="AsmBuilder.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="IOpcode.cs" />
+    <Compile Include="Opcodes\Or.cs" />
+    <Compile Include="Opcodes\Shl.cs" />
+    <Compile Include="Opcodes\And.cs" />
     <Compile Include="Opcodes\Add.cs" />
     <Compile Include="Opcodes\Brfalse.cs" />
     <Compile Include="Opcodes\Brtrue_S.cs" />
