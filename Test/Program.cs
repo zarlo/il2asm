@@ -8,7 +8,7 @@ namespace Test
         {
             Console.Clear();
             Log("Test OS booted ...");
-            Log("Test OS booted ...");
+            Log("Woot toot");
         }     
         
         public static void Log(string s)
