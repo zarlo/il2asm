@@ -22,6 +22,8 @@ namespace il2asm
             ConstantIndex.Clear();
             IOpcode.BuildOpcodeIndex();
 
+            var lst = new List<AssemblyDefinition>();
+
             if (!File.Exists(inFile))
             {
                 Console.WriteLine("The file \"" + inFile + "\" does not exist.");
@@ -29,30 +31,37 @@ namespace il2asm
             }
 
             ab = new AsmBuilder();
-            var Assembly = AssemblyDefinition.ReadAssembly(inFile);
-            var Bace = AssemblyDefinition.ReadAssembly("i2a.Bace.dll");
+            lst.Add(AssemblyDefinition.ReadAssembly("i2a.Bace.dll"));
+            lst.Add(AssemblyDefinition.ReadAssembly(inFile));
 
+            foreach (var z in lst[1].Modules)
+            {
+                for (int i = 1; i < z.AssemblyReferences.Count; i++)
+                {
+                    var refs = lst[1].MainModule.AssemblyReferences[i];
+                    lst.Add(AssemblyDefinition.ReadAssembly(Path.Combine(new FileInfo(inFile).Directory.FullName, refs.Name + ".dll")));
+                }
+            }
             ab.Global("kmain");
             ab.Label("kmain");
 
-            ScanAssembly(Assembly);
-            ScanAssembly(Bace);
+            foreach(var i in lst)
+            {
+                ScanAssembly(i);
+            }
 
-            ab.Jmp(Utils.SafeName(Assembly.EntryPoint.FullName));
+            ab.Jmp(Utils.SafeName(lst[1].EntryPoint.FullName));
             ab.Ret();
             ab.Line();
             ab.Line();
 
-            
 
-            foreach (var i in Bace.Modules)
+            foreach (var z in lst)
             {
-                CompileModule(i);
-            }
-
-            foreach (var i in Assembly.Modules)
-            {
-                CompileModule(i);
+                foreach (var i in z.Modules)
+                {
+                    CompileModule(i);
+                }
             }
 
             File.WriteAllText(outFile, ab.ToString());

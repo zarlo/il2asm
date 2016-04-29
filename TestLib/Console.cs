@@ -1,4 +1,4 @@
-﻿namespace Test
+﻿namespace TestLib
 {
     public unsafe static class Console
     {

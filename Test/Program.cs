@@ -1,4 +1,6 @@
-﻿namespace Test
+﻿using TestLib;
+
+namespace Test
 {
     public class Program
     {
