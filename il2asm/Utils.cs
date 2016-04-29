@@ -11,17 +11,17 @@ namespace il2asm
         public static string SafeName(string nm)
         {
             return nm.Replace("\r\n", "\n")
-                .Replace(" ", "_")
-                .Replace(":", "_")
-                .Replace("(", "")
-                .Replace(")", "")
-                .Replace("[", "_")
+                .Replace(" ", "SPACE")
+                .Replace(":", "DP")
+                .Replace("(", "BO")
+                .Replace(")", "BC")
+                .Replace("[", "SBO")
                 .Replace("*", "ASTRIC")
                 .Replace("<", "GREATERTHAN")
                 .Replace(">", "SMALLERTHAN")
                 .Replace(",", "COMMA")
                 .Replace("\n", "NEWLINE")
-                .Replace("]", "_");
+                .Replace("]", "SBC");
         }
     }
 }

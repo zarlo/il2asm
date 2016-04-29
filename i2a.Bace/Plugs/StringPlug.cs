@@ -10,7 +10,6 @@ namespace i2a.Bace.Plugs
     [Plug(typeof(string))]
     public unsafe class StringPlug
     {
-
         [PlugMask(typeof(int))]
         public static char get_Chars(byte* value, int index)
         {
