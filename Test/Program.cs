@@ -1,7 +1,9 @@
-﻿using TestLib;
+﻿using System;
+using il2asm.Core.Attributes;
 
 namespace Test
 {
+    [Import("TestLib.dll")]
     public class Program
     {
         public static void Main()
@@ -15,7 +17,8 @@ namespace Test
         {
             Console.ResetColor();
             Console.Write("[");
-            Console.SetColor(ConsoleColors.Black, ConsoleColors.Green);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("Log");
             Console.ResetColor();
             Console.Write("] ");

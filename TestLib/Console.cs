@@ -1,18 +1,37 @@
-﻿namespace TestLib
+﻿using il2asm.Core.Attributes;
+
+namespace TestLib
 {
+    [Plug(typeof(System.Console))]
     public unsafe static class Console
     {
         public static byte* fb = (byte*)0XB8000;
         public static int x = 0;
         public static int y = 0;
         public static byte C = 0x0F;
+        public static byte BC = 0;
+        public static byte FC = 14;
 
         public static void ResetColor()
         {
             C = 0x0F;
         }
 
-        public static void SetColor(byte background, byte forground)
+        [PlugMask(typeof(System.ConsoleColor))]
+        public static void set_BackgroundColor(byte c)
+        {
+            BC = c;
+            SetColor(BC, FC);
+        }
+
+        [PlugMask(typeof(System.ConsoleColor))]
+        public static void set_ForegroundColor(byte c)
+        {
+            FC = c;
+            SetColor(BC, FC);
+        }
+
+        private static void SetColor(byte background, byte forground)
         {
             C = (byte)(((forground & 0x0F) << 4) | (background & 0x0F));
         }
@@ -30,6 +49,7 @@
             }
         }
 
+        [PlugMask(typeof(System.String))]
         public static void WriteLine(string s)
         {
             var len = s.Length;
@@ -40,7 +60,7 @@
 
             PutC('\n');
         }
-
+        [PlugMask(typeof(System.String))]
         public static void Write(string s)
         {
             var len = s.Length;

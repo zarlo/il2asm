@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,16 +33,32 @@ namespace il2asm
 
             ab = new AsmBuilder();
             lst.Add(AssemblyDefinition.ReadAssembly("i2a.Bace.dll"));
-            lst.Add(AssemblyDefinition.ReadAssembly(inFile));
+            var asm = AssemblyDefinition.ReadAssembly(inFile);
+            
 
-            foreach (var z in lst[1].Modules)
+            foreach (var z in asm.Modules)
             {
                 for (int i = 1; i < z.AssemblyReferences.Count; i++)
                 {
-                    var refs = lst[1].MainModule.AssemblyReferences[i];
+                    var refs = asm.MainModule.AssemblyReferences[i];
                     lst.Add(AssemblyDefinition.ReadAssembly(Path.Combine(new FileInfo(inFile).Directory.FullName, refs.Name + ".dll")));
                 }
             }
+
+            foreach (var i in asm.Modules)
+            {
+                foreach (var z in i.Types)
+                {
+                    var att = z.CustomAttributes.Where((x) => { return x.AttributeType.FullName == typeof(Import).FullName; });
+                    if (att.Count() != 0)
+                    {
+                        var str = att.First().ConstructorArguments[0].Value.ToString();
+                        lst.Add(AssemblyDefinition.ReadAssembly(Path.Combine(new FileInfo(inFile).Directory.FullName, str)));
+                    }
+                }
+            }
+
+                    lst.Add(asm);
             ab.Global("kmain");
             ab.Label("kmain");
 
@@ -50,7 +67,7 @@ namespace il2asm
                 ScanAssembly(i);
             }
 
-            ab.Jmp(Utils.SafeName(lst[1].EntryPoint.FullName));
+            ab.Jmp(Utils.SafeName(asm.EntryPoint.FullName));
             ab.Ret();
             ab.Line();
             ab.Line();
@@ -93,12 +110,25 @@ namespace il2asm
                                 // ab.Comment("Found Plug for: " + (plug.ConstructorArguments[0].Value).ToString());
                                 var tt = Type.GetType(plug.ConstructorArguments[0].Value.ToString());
                                 string Paramaters = "";
-                                for (int j = 1; j < y.Parameters.Count; j++)
-                                {
-                                    var hh = y.Parameters[j];
-                                    Paramaters += hh.ParameterType.FullName + ",";
-                                }
 
+                                var att = y.CustomAttributes.Where((x) => { return x.AttributeType.FullName == typeof(PlugMask).FullName; });
+                                if (att.Count() != 0)
+                                {
+                                    var str = att.First().ConstructorArguments[0].Value as CustomAttributeArgument[];
+                                    for (int j = 0; j < str.Length; j++)
+                                    {
+                                        Paramaters += Type.GetType(str[j].Value.ToString()).FullName + ",";
+                                    }
+                                }
+                                else
+                                {
+
+                                    for (int j = 1; j < y.Parameters.Count; j++)
+                                    {
+                                        var hh = y.Parameters[j];
+                                        Paramaters += hh.ParameterType.FullName + ",";
+                                    }
+                                }
                                 Paramaters = Paramaters.TrimEnd(',');
                                 PlugIndex.Add(Utils.SafeName(y.MethodReturnType.ReturnType.ToString() + " " + tt.FullName + "::" + y.Name + "(" + Paramaters + ")"), Utils.SafeName(y.FullName));
                             }
