@@ -55,6 +55,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\i2a.Bace\i2a.Bace.csproj">
+      <Project>{513e7808-5079-41a7-95bc-f70a88b04c7b}</Project>
+      <Name>i2a.Bace</Name>
+    </ProjectReference>
     <ProjectReference Include="..\il2asm\il2asm.csproj">
       <Project>{b88e43cb-37f1-47e4-8abb-78fef7aa98e1}</Project>
       <Name>il2asm</Name>

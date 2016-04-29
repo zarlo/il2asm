@@ -1,11 +1,11 @@
 ﻿namespace Test
 {
-    public unsafe class Program
+    public class Program
     {
         public static void Main()
         {
             Console.Clear();
-            Console.SetColor(ConsoleColors.Black, ConsoleColors.LightMagenta); 
+            Console.SetColor(ConsoleColors.Black, ConsoleColors.White); 
             Console.WriteLine("Test OS booted ...");
         }               
     }    

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.Plugs
+namespace i2a.Bace.Plugs
 {
     [Plug(typeof(string))]
     public unsafe class StringPlug

@@ -30,10 +30,37 @@ namespace il2asm
 
             ab = new AsmBuilder();
             var Assembly = AssemblyDefinition.ReadAssembly(inFile);
+            var Bace = AssemblyDefinition.ReadAssembly("i2a.Bace.dll");
 
             ab.Global("kmain");
             ab.Label("kmain");
 
+            ScanAssembly(Assembly);
+            ScanAssembly(Bace);
+
+            ab.Jmp(Utils.SafeName(Assembly.EntryPoint.FullName));
+            ab.Ret();
+            ab.Line();
+            ab.Line();
+
+            
+
+            foreach (var i in Bace.Modules)
+            {
+                CompileModule(i);
+            }
+
+            foreach (var i in Assembly.Modules)
+            {
+                CompileModule(i);
+            }
+
+            File.WriteAllText(outFile, ab.ToString());
+
+        }
+
+        private void ScanAssembly(AssemblyDefinition Assembly)
+        {
             foreach (var i in Assembly.Modules)
             {
                 foreach (var z in i.Types)
@@ -70,19 +97,6 @@ namespace il2asm
                     }
                 }
             }
-
-            ab.Jmp(Utils.SafeName(Assembly.EntryPoint.FullName));
-            ab.Ret();
-            ab.Line();
-            ab.Line();
-
-            foreach (var i in Assembly.Modules)
-            {
-                CompileModule(i);
-            }
-
-            File.WriteAllText(outFile, ab.ToString());
-
         }
 
         public void CompileModule(ModuleDefinition md)

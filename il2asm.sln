@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "il2asm.Core", "il2asm.Core\il2asm.Core.csproj", "{2C665135-3C60-4D9C-AF62-4264FC42B2CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "i2a.Bace", "i2a.Bace\i2a.Bace.csproj", "{513E7808-5079-41A7-95BC-F70A88B04C7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{2C665135-3C60-4D9C-AF62-4264FC42B2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C665135-3C60-4D9C-AF62-4264FC42B2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C665135-3C60-4D9C-AF62-4264FC42B2CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{513E7808-5079-41A7-95BC-F70A88B04C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{513E7808-5079-41A7-95BC-F70A88B04C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{513E7808-5079-41A7-95BC-F70A88B04C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{513E7808-5079-41A7-95BC-F70A88B04C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
